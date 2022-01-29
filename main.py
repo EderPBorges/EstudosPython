@@ -153,4 +153,10 @@
 # from poo_avancada import multipla
 # from poo_avancada import mixins
 # from poo_avancada import iterator
-from poo_avancada import contador_objetos
+# from poo_avancada import contador_objetos
+
+# from programacao_funcional import funcao_primeira_classe
+# from programacao_funcional import funcao_alta_ordem
+# from programacao_funcional import closure
+# from programacao_funcional import funcoes_lambda
+from programacao_funcional import funcoes_lambda_alternativa
