@@ -159,4 +159,5 @@
 # from programacao_funcional import funcao_alta_ordem
 # from programacao_funcional import closure
 # from programacao_funcional import funcoes_lambda
-from programacao_funcional import funcoes_lambda_alternativa
+# from programacao_funcional import funcoes_lambda_alternativa
+from programacao_funcional import filter
