@@ -160,4 +160,7 @@
 # from programacao_funcional import closure
 # from programacao_funcional import funcoes_lambda
 # from programacao_funcional import funcoes_lambda_alternativa
-from programacao_funcional import filter
+# from programacao_funcional import filter
+# from programacao_funcional import reduce
+# from programacao_funcional import fatorial_recursivo
+from programacao_funcional import imutabilidade_v1
