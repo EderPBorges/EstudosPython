@@ -27,7 +27,7 @@ print(
             filter(
                 lambda mes: mdays[mes] == 31,
                 range(1, 13)
-            )    
+            )
         ),
         'Meses com 31 dias:'
     )
