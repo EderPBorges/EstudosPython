@@ -165,4 +165,7 @@
 # from programacao_funcional import fatorial_recursivo
 # from programacao_funcional import imutabilidade_v1
 # from programacao_funcional import imperativo
-from programacao_funcional import funcoes_imutabilidade_v1
+# from programacao_funcional import funcoes_imutabilidade_v1
+# from programacao_funcional import implementando_map_v1
+# from programacao_funcional import implementando_map_v2
+from programacao_funcional import desafio_mdc
