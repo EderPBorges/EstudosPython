@@ -1,172 +1,118 @@
 #!python3
+from exceptions import OperacaoFinanceiraError, SaldoInsuficienteError
+from leitor import LeitorDeArquivo
 
-# print('Ola mundo!')
-# import pacote.sub.arquivo
 
-# import tipos.variaveis
-# from tipos import variaveis, basicos
-# import tipos.lista
-# import tipos.tuplas
-# import tipos.conjuntos
-# import tipos.dicionario
+class Cliente:
+    def __init__(self, nome, cpf, profissao):
+        self.nome = nome
+        self.cpf = cpf
+        self.profissao = profissao
 
-# import operadores.unarios
-# import operadores.aritmeticos
-# import operadores.relcionais
-# import operadores.atribuicao
-# import operadores.logicos
-# import operadores.ternario
-# from operadores import mais_operadores
 
-# import estruturas_controle.if_1
-# import estruturas_controle.if_2
-# import estruturas_controle.for_1
-# import estruturas_controle.while_1
-# import estruturas_controle.outros_exemplos
+class ContaCorrente:
+    total_contas_criadas = 0
+    taxa_operacao = None
 
-# from funcoes import basico
-# basico.saudacao()
-# basico.saudacao('maria')
-# basico.saudacao('João', 33)
-# basico.saudacao(idade = 89)
-# a = basico.soma_e_multi(x = 10, a = 2, b = 3)
-# print(a)
+    def __init__(self, cliente, agencia, numero):
+        self.__saldo = 100
+        self.__agencia = 0
+        self.__numero = 0
+        self.saques_nao_permitidos = 0
+        self.transferencias_nao_permitidas = 0
+        self.cliente = cliente
+        self.__set_agencia(agencia)
+        self.__set_numero(numero)
+        ContaCorrente.total_contas_criadas += 1
+        ContaCorrente.taxa_operacao = 30/ContaCorrente.total_contas_criadas
 
-# from funcoes import args
-# s = args.soma(1,2,3,4,5,6,7,8,9,10)
-# print(s)
-# resultado = args.resultado_final(nome = 'Pedro', nota = 7.3)
-# print(resultado)
+    @property
+    def agencia(self):
+        return self.__agencia
 
-# from funcoes import funcional
-# import funcoes.map_reduce
+    def __set_agencia(self, value):
+        if not isinstance(value, int):
+            raise ValueError("O atributo agencia deve ser um inteiro", value)
+        if value <= 0:
+            raise ValueError("O atributo agencia deve ser maior que zero")
 
-# from fundamentos import conversaodetipos
-# from fundamentos import numeros2
-# from fundamentos import strings_2
-# from fundamentos import strings_3
-# from fundamentos import strings_4
-# from fundamentos import lista_1
-# from fundamentos import lista_2
-# from fundamentos import lista_3
-# from fundamentos import tuplas
-# from fundamentos import dicionarios_1
-# from fundamentos import dicionarios_2
-# from fundamentos import conjunto
-# from fundamentos import interpolacao
+        self.__agencia = value
 
-# from fundamentos_projetos import area_circulo_v1
-# from fundamentos_projetos import area_circulo_v3
-# from fundamentos_projetos import area_circulo_v4
-# from fundamentos_projetos import area_circulo_v6
-# from fundamentos_projetos import area_circulo_v8
-# from fundamentos_projetos import area_circulo_v9
-# from fundamentos_projetos import area_circulo_v10
-# from fundamentos_projetos import area_circulo_v11
-# from fundamentos_projetos import area_circulo_v12
-# from fundamentos_projetos import area_circulo_v13
-# from fundamentos_projetos import area_circulo_v14
-# from fundamentos_projetos import area_circulo_v15
+    @property
+    def numero(self):
+        return self.__numero
 
-# from estruturas_controle import if_else_1
-# from estruturas_controle import if_else_2
-# from estruturas_controle import while_2
-# from estruturas_controle import for_2
-# from estruturas_controle import for_3
-# from estruturas_controle import for_4
-# from estruturas_controle import break_continue
-# from estruturas_controle import for_5
-# from estruturas_controle import switch_1
-# from estruturas_controle import switch_2
-# from estruturas_controle import for_sem_else
-# from estruturas_controle import for_com_else 
+    def __set_numero(self, value):
+        if not isinstance(value, int):
+            raise ValueError("O atributo número deve ser um inteiro")
+        if value <= 0:
+            raise ValueError("O atributo número  deve ser maior que zero")
+        self.__numero = value
 
-# from estruturas_controle_projetos import fibonacci_v1
-# from estruturas_controle_projetos import fibonacci_v2
-# from estruturas_controle_projetos import fibonacci_v3
-# from estruturas_controle_projetos import fibonacci_v4
-# from estruturas_controle_projetos import fibonacci_v5
-# from estruturas_controle_projetos import fibonacci_v6
-# from estruturas_controle_projetos import fibonacci_v7
-# from estruturas_controle_projetos import exemplo_recursao
-# from estruturas_controle_projetos import fibonacci_recursive_v1
-# from estruturas_controle_projetos import fibonacci_recursive_v2
+    @property
+    def saldo(self):
+        return self.__saldo
 
-# from manipulacao_arquivos import io_v1
-# from manipulacao_arquivos import io_v2
-# from manipulacao_arquivos import io_v3
-# from manipulacao_arquivos import io_v4
-# from manipulacao_arquivos import io_v5
-# from manipulacao_arquivos import io_v6
+    @saldo.setter
+    def saldo(self, value):
+        if not isinstance(value, int):
+            raise ValueError("O atributo saldo deve ser um inteiro")
 
-# from list_comprehension import comprehension_v1
-# from list_comprehension import comprehension_v2
-# from list_comprehension import comprehension_v3
-# from list_comprehension import comprehension_v4
-# from list_comprehension import comprehension_v5
-# from list_comprehension import switch_3
+        self.__saldo = value
 
-# from funcoes import gerador_html_v1
-# from funcoes import gerador_html_v2
-# from funcoes import gerador_html_v3
-# from funcoes import gerador_html_v4
-# from funcoes import packing
-# from funcoes import packing_nomeado
-# from funcoes import unpacking_nomeado
-# from funcoes import prog_funcional_spoiler
-# from funcoes import callable_packing
-# from funcoes import callable_packing_nomeado
-# from funcoes import todos_parametros
-# from funcoes import gerador_html_v5
-# from funcoes import callable_object
-# from funcoes import problema_arg_padrao_mutavel
-# from funcoes import correcao_arg_padrao_mutavel
-# from funcoes import decorator
-# from funcoes import desafio_html
+    def transferir(self, valor, favorecido):
+        if valor < 0:
+            raise ValueError(
+                "O Valor a ser sacado não pode ser menor que zero")
+        try:
+            self.sacar(valor)
+        except SaldoInsuficienteError as E:
+            self.transferencias_nao_permitidas += 1
+            E.args = ()
+            raise OperacaoFinanceiraError("Operação não finalizada") from E
+        favorecido.depositar(valor)
 
-# from pacotes import pacote_v1
-# from pacotes import pacote_v2
-# from pacotes import pacote_v3
-# from pacotes import pacote_v4
-# from pacotes import pacote_v5
-# from pacotes import desafio_package
+    def sacar(self, valor):
+        if valor < 0:
+            raise ValueError(
+                "O Valor a ser sacado não pode ser menor que zero")
+        if self.saldo < valor:
+            self.saques_nao_permitidos += 1
+            raise SaldoInsuficienteError('', self.saldo, valor)
+        self.saldo -= valor
 
-# from poo import data_v1
-# from poo import data_v2
-# from poo import desafio_carro
-# from poo import todo_v1
-# from poo import todo_v2
-# from poo import todo_v3
-# from poo import todo_v4
-# from poo import todo_v5
-# from poo import todo_v6
-# from poo import todo_v7
-# from poo import todo_v8
-# from poo import desafio_loja
+    def depositar(self, valor):
+        self.saldo += valor
 
-# from poo_avancada import evolucao_v1
-# from poo_avancada import evolucao_v2
-# from poo_avancada import evolucao_v3
-# from poo_avancada import evolucao_v4
-# from poo_avancada import evolucao_v5
-# from poo_avancada import evolucao_v6
-# from poo_avancada import multipla
-# from poo_avancada import mixins
-# from poo_avancada import iterator
-# from poo_avancada import contador_objetos
 
-# from programacao_funcional import funcao_primeira_classe
-# from programacao_funcional import funcao_alta_ordem
-# from programacao_funcional import closure
-# from programacao_funcional import funcoes_lambda
-# from programacao_funcional import funcoes_lambda_alternativa
-# from programacao_funcional import filter
-# from programacao_funcional import reduce
-# from programacao_funcional import fatorial_recursivo
-# from programacao_funcional import imutabilidade_v1
-# from programacao_funcional import imperativo
-# from programacao_funcional import funcoes_imutabilidade_v1
-# from programacao_funcional import implementando_map_v1
-# from programacao_funcional import implementando_map_v2
-# from programacao_funcional import desafio_mdc
+def main():
+    import sys
 
+    contas = []
+    while(True):
+        try:
+            nome = input("Nome do cliente: \n")
+            agencia = input("Número da agência: \n")
+            breakpoint()
+            numero = input("Número da conta corrente: \n")
+
+            cliente = Cliente(nome, None, None)
+            conta_corrente = ContaCorrente(cliente, agencia, numero)
+            contas.append = (conta_corrente)
+        except KeyboardInterrupt:
+            print(f"\n\n {len(contas)} conta(s) criadas")
+            sys.exit()
+
+
+#conta_corrente1 = ContaCorrente(None, 400, 1234567)
+#conta_corrente2 = ContaCorrente(None, 401, 1234568)
+#ry:
+#    conta_corrente1.sacar(10000)
+#    print("ContaCorrente1 Saldo: ", conta_corrente1.saldo)
+#    print("ContaCorrente2 Saldo: ", conta_corrente2.saldo)
+#except OperacaoFinanceiraError as E:
+#   breakpoint()
+#   pass
+
+with LeitorDeArquivo("Arquivo.txt") as leitor:
+    leitor.ler_proxima_linha()
